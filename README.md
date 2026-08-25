@@ -1,4 +1,4 @@
-# Sistem de Recomandare Filme cu SVD (De la zero)
+# Sistem de Recomandare Filme cu SVD
 
 Acest proiect este o implementare a unui sistem de recomandare (Collaborative Filtering) bazat pe dataset-ul **MovieLens 100k**. Caracteristica principală a acestui proiect este **implementarea matematică de la zero a Descompunerii Valorilor Singulare (SVD)**, fără a folosi funcțiile predefinite de SVD din bibliotecile de calcul numeric.
 
