@@ -1,54 +1,54 @@
-# Sistem de Recomandare Filme cu SVD
+# Movie Recommendation System using SVD
 
-Acest proiect este o implementare a unui sistem de recomandare (Collaborative Filtering) bazat pe dataset-ul **MovieLens 100k**. Caracteristica principală a acestui proiect este **implementarea matematică de la zero a Descompunerii Valorilor Singulare (SVD)**, fără a folosi funcțiile predefinite de SVD din bibliotecile de calcul numeric.
+This project is an implementation of a recommendation system (Collaborative Filtering) based on the **MovieLens 100k** dataset. The main feature of this project is the **from-scratch mathematical implementation of Singular Value Decomposition (SVD)**, without using the predefined SVD functions from numerical computation libraries.
 
-Pentru a obține factorizarea SVD ($A = U \Sigma V^T$), algoritmul folosește **Factorizarea QR prin reflexii Householder** urmată de **Iterația QR**.
+To obtain the SVD factorization ($A = U \Sigma V^T$), the algorithm uses **QR Factorization via Householder reflections** followed by the **QR Algorithm (Iteration)**.
 
-## Funcționalități Principale
+## Key Features
 
-* **Factorizare Matriceală:** Implementare proprie a algoritmului SVD pentru a extrage trăsăturile latente ale utilizatorilor și filmelor.
-* **Descărcare Automată a Datelor:** Scriptul descarcă automat setul de date MovieLens 100k dacă nu este găsit local.
-* **Procesare și Predicție:** Tratează valorile lipsă (filmele nevăzute) folosind media notelor fiecărui utilizator și prezice ratingurile folosind o aproximare de rang redus ($k$).
-* **Sistem de Recomandare:** Analizează istoricul unui utilizator și îi recomandă cele mai relevante filme pe care nu le-a vizionat încă.
-* **Validare Matematică:** Compară rezultatele SVD-ului custom cu funcția super-optimizată `numpy.linalg.svd` pentru a demonstra acuratețea (eroare de ordinul $10^{-14}$).
-* **Vizualizare Date:** Generează grafice pentru analiza performanței modelului.
+* **Matrix Factorization:** Custom implementation of the SVD algorithm to extract latent features of users and movies.
+* **Automatic Data Download:** The script automatically downloads the MovieLens 100k dataset if it is not found locally.
+* **Processing and Prediction:** Handles missing values (unseen movies) using the mean rating of each user and predicts ratings using a low-rank approximation ($k$).
+* **Recommendation System:** Analyzes a user's viewing history and recommends the most relevant movies they haven't seen yet.
+* **Mathematical Validation:** Compares the custom SVD results with the highly optimized `numpy.linalg.svd` function to demonstrate accuracy (error in the order of $10^{-14}$).
+* **Data Visualization:** Generates plots to analyze the model's performance.
 
-## Cerințe de Sistem
+## System Requirements
 
-Proiectul rulează în Python 3 și necesită următoarele biblioteci instalate:
+The project runs on Python 3 and requires the following installed libraries:
 
 ```bash
 pip install numpy pandas matplotlib
 ```
 
-*(Bibliotecile `ssl`, `os`, `zipfile` și `urllib.request` fac parte din biblioteca standard Python și nu necesită instalare separată).*
+*(The `ssl`, `os`, `zipfile`, and `urllib.request` libraries are part of the standard Python library and do not require separate installation).*
 
-## Cum se rulează
+## How to Run
 
-1. Salvează codul sursă într-un fișier, de exemplu `recomandare_svd.py`.
-2. Deschide terminalul în directorul respectiv și rulează:
+1. Save the source code into a file, for example, `svd_recommender.py`.
+2. Open the terminal in that directory and run:
 
 ```bash
-python recomandare_svd.py
+python svd_recommender.py
 ```
 
-La prima rulare, scriptul va descărca arhiva `ml-100k.zip` de pe serverele GroupLens și va extrage datele necesare. Pentru a păstra un timp de execuție rezonabil pentru algoritmul SVD custom, scriptul extrage automat un subset din baza de date (ex: primii 100 de utilizatori și 130 de filme).
+On the first run, the script will download the `ml-100k.zip` archive from the GroupLens servers and extract the necessary data. To maintain a reasonable execution time for the custom SVD algorithm, the script automatically extracts a subset of the database (e.g., the first 100 users and 130 movies).
 
-## Ce generează scriptul?
+## What Does the Script Output?
 
-Odată rulat, scriptul va oferi următoarele rezultate:
+Once executed, the script will provide the following results:
 
-**1. Output în consolă:**
-* Statusul descărcării și încărcării datelor.
-* Eroarea (Norma $L_2$) dintre valorile singulare calculate manual și cele calculate de NumPy.
-* Top recomandări (filme și note estimate) pentru un utilizator de test.
-* Istoricul real de vizionare al acelui utilizator pentru a oferi context asupra recomandărilor.
+**1. Console Output:**
+* Data download and loading status.
+* The error ($L_2$ Norm) between manually calculated singular values and those calculated by NumPy.
+* Top recommendations (movies and estimated ratings) for a test user.
+* The actual viewing history of that user to provide context for the recommendations.
 
-**2. Grafice salvate local:**
-* `singular_values.png` - Arată importanța fiecărei trăsături latente (descreșterea exponențială a valorilor singulare).
-* `rmse_vs_k.png` - Analizează modul în care eroarea de predicție (RMSE) scade pe măsură ce mărim numărul de trăsături latente ($k$) reținute în reconstrucția matricii.
+**2. Locally Saved Plots:**
+* `singular_values.png` - Shows the importance of each latent feature (the exponential decay of singular values).
+* `rmse_vs_k.png` - Analyzes how the prediction error (RMSE) decreases as we increase the number of latent features ($k$) retained in the matrix reconstruction.
 
-## Structura Matematică
+## Mathematical Structure
 
-* `qr_householder(A)`: Aplică transformări ortogonale (reflexii Householder) pentru a descompune matricea $A$ într-o matrice ortogonală $Q$ și una superior triunghiulară $R$.
-* `custom_svd(A)`: Calculează valorile și vectorii proprii pentru $A^T A$ aplicând iterații QR pe baza funcției anterioare, forțând simetria la fiecare pas pentru a evita erorile de precizie în virgulă mobilă. Apoi extrage matricile $U$, $\Sigma$ și $V^T$.
+* `qr_householder(A)`: Applies orthogonal transformations (Householder reflections) to decompose matrix $A$ into an orthogonal matrix $Q$ and an upper triangular matrix $R$.
+* `custom_svd(A)`: Calculates the eigenvalues and eigenvectors for $A^T A$ by applying QR iterations based on the previous function, forcing symmetry at each step to avoid floating-point precision errors. It then extracts matrices $U$, $\Sigma$, and $V^T$.
