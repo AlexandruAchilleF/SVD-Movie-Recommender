@@ -25,14 +25,14 @@ pip install numpy pandas matplotlib
 
 ## How to Run
 
-1. Save the source code into a file, for example, `svd_recommender.py`.
-2. Open the terminal in that directory and run:
-
 ```bash
-python svd_recommender.py
+git clone https://github.com/AlexandruAchilleF/SVD-Movie-Recommender.git
+cd SVD-Movie-Recommender
+pip install numpy pandas matplotlib
+python main.py
 ```
 
-On the first run, the script will download the `ml-100k.zip` archive from the GroupLens servers and extract the necessary data. To maintain a reasonable execution time for the custom SVD algorithm, the script automatically extracts a subset of the database (e.g., the first 100 users and 130 movies).
+If the dataset is not found locally, the script will download the `ml-100k.zip` archive from the GroupLens servers and extract the necessary data. To maintain a reasonable execution time for the custom SVD algorithm, the script automatically extracts a subset of the database (e.g., the first 100 users and 130 movies).
 
 ## What Does the Script Output?
 
@@ -47,6 +47,12 @@ Once executed, the script will provide the following results:
 **2. Locally Saved Plots:**
 * `singular_values.png` - Shows the importance of each latent feature (the exponential decay of singular values).
 * `rmse_vs_k.png` - Analyzes how the prediction error (RMSE) decreases as we increase the number of latent features ($k$) retained in the matrix reconstruction.
+
+## Results
+
+| Singular values | RMSE vs. number of latent features |
+| --- | --- |
+| ![Singular values](singular_values.png) | ![RMSE vs k](rmse_vs_k.png) |
 
 ## Mathematical Structure
 
